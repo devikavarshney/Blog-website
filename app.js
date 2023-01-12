@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const _ = require("lodash");
 const ejs = require("ejs");
 
 const homeStartingContent =
@@ -42,6 +43,19 @@ app.post("/compose", function (req, res) {
   };
   posts.push(post);
   res.redirect("/");
+});
+
+app.get("/posts/:postName", function (req, res) {
+  const requestedPostName = _.lowerCase(req.params.postName);
+  posts.forEach(function (post) {
+    const currentPost = _.lowerCase(post.title);
+    if (requestedPostName === currentPost) {
+      res.render("blogPost", {
+        postTitle: post.title,
+        postContent: post.content,
+      });
+    }
+  });
 });
 
 app.listen(3000, function () {
