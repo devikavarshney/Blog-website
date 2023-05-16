@@ -1,2 +1,2 @@
-# Blog-Website
+# BlogZilla
 Blog Website
